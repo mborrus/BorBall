@@ -89,3 +89,18 @@ def create_team_elo_chart(df):
     team_elo_chart = team_elo_chart.ffill()
     
     return team_elo_chart
+
+# Basic ELO win probability calculation
+def calc_elo_win(A, B):
+    awin = 1 / (1 + 10**( (B - A) / 400))
+    return(awin)
+
+# differences in team strength are typically more apparent in the tournament, 
+# and the model accounts for this, too. An additional multiplier of 1.07x is applied 
+# to the Elo ratings difference between the teams in forecasting margins of 
+# victory and win probabilities in the tournament.
+# this was for NCAA march madness, needs to be tested for NFL
+
+def calc_elo_win_tourney(A, B, boost=1.07):
+    awin = 1 / (1 + 10**( (B - A) * boost / 400))
+    return(awin)
